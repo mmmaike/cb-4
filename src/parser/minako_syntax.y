@@ -57,10 +57,184 @@
 %%
 
 program:
-	// empty
-	{
+programbody
+{
             $$ = Value::None;
-        }
+}
+
+programbody:
+%empty
+{
+            $$ = Value::None;
+}
+| programbody declassignment ';'	
+{
+            $$ = Value::None;
+}
+| programbody functiondefinition 	
+{
+            $$ = Value::None;
+}
+
+functiondefinition:
+type id '(' parameterlist ')' '{' statementlist '}' 
+{
+            $$ = Value::None;
+}
+| type id '('')' '{' statementlist '}'
+{
+            $$ = Value::None;
+}
+
+parameterlist:
+type id parameterlistrep 
+{
+            $$ = Value::None;
+}
+
+parameterlistrep:
+%empty 
+{
+            $$ = Value::None;
+} 
+| parameterlistrep ',' type id 
+{
+            $$ = Value::None;
+}
+
+functioncall:
+id '(' functioncallopt ')' 
+{
+            $$ = Value::None;
+}
+
+functioncallopt:
+%empty
+{
+            $$ = Value::None;
+}
+| assignment assignmentrep
+{
+            $$ = Value::None;
+}
+
+assignmentrep:
+%empty
+{
+            $$ = Value::None;
+}
+| assignmentrep ',' assignment
+{
+            $$ = Value::None;
+}
+
+statementlist:
+blockrep 
+{
+            $$ = Value::None;
+}
+
+blockrep:
+%empty 
+{
+            $$ = Value::None;
+}
+| blockrep block
+{
+            $$ = Value::None;
+}
+
+block:
+'{' statementlist '}'
+{
+            $$ = Value::None;
+}
+| statement
+{
+            $$ = Value::None;
+}
+
+statement:
+ifstatement
+{
+            $$ = Value::None;
+}
+| whilestatement
+{
+            $$ = Value::None;
+}
+| returnstatement ';'
+{
+            $$ = Value::None;
+}
+| dowhilestatement ';'
+{
+            $$ = Value::None;
+}
+| printf ';'
+{
+            $$ = Value::None;
+}
+| declassignment ';'
+{
+            $$ = Value::None;
+}
+| statassignment ';'
+{
+            $$ = Value::None;
+}
+| functioncall ';'
+{
+            $$ = Value::None;
+}
+
+statblock:
+'{' statementlist '}'
+{
+            $$ = Value::None;
+}
+| statement
+
+ifstatement:
+KW_IF '(' assignment ')' statblock else
+{
+            $$ = Value::None;
+}
+
+else:
+%empty
+{
+            $$ = Value::None;
+}
+| KW_ELSE statblock
+{
+            $$ = Value::None;
+}
+
+forstatement:
+KW_FOR '(' statassignment ';' expr ';' statassignment ')' statblock
+{
+            $$ = Value::None;
+}
+| KW_FOR '(' declassignment ';' expr ';' statassignment ')' statblock
+{
+            $$ = Value::None;
+}
+
+dowhilestatement:
+KW_DO statblock KW_WHILE '(' assignment ')'
+{
+            $$ = Value::None;
+}
+
+whilestatement:
+KW_WHILE '(' assignment ')' statblock
+{
+            $$ = Value::None;
+}
+
+returnstatement:
+
 
 
 %%
