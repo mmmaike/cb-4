@@ -1,0 +1,53 @@
+program	::=	programbody
+programbody ::= | programbody (declassignment ";" | functiondefinition)
+functiondefinition	::=	type id "(" parameterlist ")" "{" statementlist "}" | type id "(" ")" "{" statementlist "}"
+parameterlist	::=	type id parameterlistrep
+parameterlistrep ::= | parameterlistrep "," type id
+functioncall	::=	id "(" functioncallopt ")"
+functioncallopt ::= | assignment assignmentrep
+assignmentrep ::= | assignmentrep "," assignment
+statementlist	::=	blockrep
+blockrep ::= | blockrep block
+block	::=	"{" statementlist "}"
+|	statement
+statement	::=	ifstatement
+|	forstatement
+|	whilestatement
+|	returnstatement ";"
+|	dowhilestatement ";"
+|	printf ";"
+|	declassignment ";"
+|	statassignment ";"
+|	functioncall ";"
+statblock	::=	"{" statementlist "}"
+|	statement
+ifstatement	::=	<KW_IF> "(" assignment ")" statblock else
+else ::= | <KW_ELSE> statblock 
+forstatement	::=	<KW_FOR> "(" ( statassignment | declassignment ) ";" expr ";" statassignment ")" statblock
+dowhilestatement	::=	<KW_DO> statblock <KW_WHILE> "(" assignment ")"
+whilestatement	::=	<KW_WHILE> "(" assignment ")" statblock
+returnstatement	::=	<KW_RETURN> assignmentop
+assignmentop ::= | assignment
+printf	::=	<KW_PRINTF> "(" (assignment | CONST_STRING) ")"
+declassignment	::=	type id assignmentassignop
+assignmentassignop ::= | "=" assignment
+type	::=	<KW_BOOLEAN>
+|	<KW_FLOAT>
+|	<KW_INT>
+|	<KW_VOID>
+statassignment	::=	id "=" assignment
+assignment	::=	id "=" assignment
+|	expr
+expr	::=	simpexpr comparison
+comparison ::= | "==" simpexpr | "!=" simpexpr | "<=" simpexpr | ">=" simpexpr | "<" simpexpr | ">" simpexpr
+simpexpr	::=	( "-" term | term ) addsubtractor
+addsubtractor ::= |  addsubtractor ("+" term | "-" term | "||" term)
+term	::=	factor factorrep
+factorrep ::= | factorrep ( "*" factor | "/" factor | "&&" factor )
+factor	::=	<CONST_INT>
+|	<CONST_FLOAT>
+|	<CONST_BOOLEAN>
+|	functioncall
+|	id
+|	"(" assignment ")"
+id	::=	<ID>
