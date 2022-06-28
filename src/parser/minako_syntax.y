@@ -234,6 +234,204 @@ KW_WHILE '(' assignment ')' statblock
 }
 
 returnstatement:
+KW_RETURN assignmentop
+{
+            $$ = Value::None;
+}
+
+association
+%empty
+{
+            $$ = Value::None;
+}
+| assignment
+
+printf:
+KW_PRINTF '(' assignment ')'
+{
+            $$ = Value::None;
+}
+| KW_PRINTF '(' CONST_STRING ')'
+{
+            $$ = Value::None;
+}
+
+declassignment:
+type id assignmentassignop
+{
+            $$ = Value::None;
+}
+
+assignmentassignop:
+%empty
+{
+            $$ = Value::None;
+}
+| '=' assignment
+{
+            $$ = Value::None;
+}
+
+type:
+KW_BOOLEAN
+{
+            $$ = Value::None;
+}
+| KW_FLOAT
+{
+            $$ = Value::None;
+}
+| KW_INT
+{
+            $$ = Value::None;
+}
+| KW_VOID
+{
+            $$ = Value::None;
+}
+
+statassignment:
+id '=' assignment
+{
+            $$ = Value::None;
+}
+
+assignment:
+id '=' assignment
+{
+            $$ = Value::None;
+}
+| expr
+{
+            $$ = Value::None;
+}
+
+expr:
+simpexpr comparison
+{
+            $$ = Value::None;
+}
+
+comparison:
+%empty
+{
+            $$ = Value::None;
+}
+| EQ simpexpr
+{
+            $$ = Value::None;
+}
+| NEQ simpexpr
+{
+            $$ = Value::None;
+}
+| LEQ simpexpr
+{
+            $$ = Value::None;
+}
+| GEQ simpexpr
+{
+            $$ = Value::None;
+}
+| LSS simpexpr
+{
+            $$ = Value::None;
+}
+| GRT simpexpr
+{
+            $$ = Value::None;
+}
+
+simpexpr:
+'-' term addsubtractor
+{
+            $$ = Value::None;
+}
+| term addsubtractor
+{
+            $$ = Value::None;
+}
+
+addsubtractor:
+%empty
+{
+            $$ = Value::None;
+}
+| addsubtractor '+' term
+{
+            $$ = Value::None;
+}
+| addsubtractor '-' term
+{
+            $$ = Value::None;
+}
+| addsubtractor OR term
+{
+            $$ = Value::None;
+}
+
+term:
+factor factorrep
+{
+            $$ = Value::None;
+}
+
+factorrep:
+%empty
+{
+            $$ = Value::None;
+}
+| factorrep '*' factor
+{
+            $$ = Value::None;
+}
+| factorrep '/' factor
+{
+            $$ = Value::None;
+}
+| factorrep AND factor
+{
+            $$ = Value::None;
+}
+
+factor:
+CONST_INT
+{
+            $$ = Value::None;
+}
+| CONST_FLOAT
+{
+            $$ = Value::None;
+}
+| CONST_BOOLEAN
+{
+            $$ = Value::None;
+}
+| functioncall
+{
+            $$ = Value::None;
+}
+| id
+{
+            $$ = Value::None;
+}
+| '(' assignment ')'
+{
+            $$ = Value::None;
+}
+
+id:
+ID
+{
+            $$ = Value::None;
+}
+
+
+
+
+
+
+
 
 
 
