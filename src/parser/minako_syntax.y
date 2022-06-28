@@ -159,6 +159,14 @@ ifstatement
 {
             $$ = Value::None;
 }
+| elsestatement
+{
+            $$ = Value::None;
+}
+| forstatement
+{
+            $$ = Value::None;
+}
 | whilestatement
 {
             $$ = Value::None;
@@ -196,20 +204,18 @@ statblock:
 | statement
 
 ifstatement:
-KW_IF '(' assignment ')' statblock else
+KW_IF '(' assignment ')' statblock LOWER_THAN_ELSE
 {
             $$ = Value::None;
 }
 
-else:
-%empty
+elsestatement:
+KW_ELSE statblock
 {
             $$ = Value::None;
 }
-| KW_ELSE statblock
-{
-            $$ = Value::None;
-}
+
+
 
 forstatement:
 KW_FOR '(' statassignment ';' expr ';' statassignment ')' statblock
@@ -239,7 +245,7 @@ KW_RETURN assignmentop
             $$ = Value::None;
 }
 
-association
+assignmentop:
 %empty
 {
             $$ = Value::None;
