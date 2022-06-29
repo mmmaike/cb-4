@@ -56,12 +56,379 @@
 
 %%
 
-program:
-	// empty
-	{
+program: programbody {
             $$ = Value::None;
-        }
+}
 
+programbody:
+%empty
+{
+            $$ = Value::None;
+}
+| programbody declassignment ';'	
+{
+            $$ = Value::None;
+}
+| programbody functiondefinition 	
+{
+            $$ = Value::None;
+}
+
+functiondefinition:
+type id '(' parameterlist ')' '{' statementlist '}' 
+{
+            $$ = Value::None;
+}
+| type id '('')' '{' statementlist '}'
+{
+            $$ = Value::None;
+}
+
+parameterlist:
+type id parameterlistrep 
+{
+            $$ = Value::None;
+}
+
+parameterlistrep:
+%empty 
+{
+            $$ = Value::None;
+} 
+| parameterlistrep ',' type id 
+{
+            $$ = Value::None;
+}
+
+functioncall:
+id '(' functioncallopt ')' 
+{
+            $$ = Value::None;
+}
+
+functioncallopt:
+%empty
+{
+            $$ = Value::None;
+}
+| assignment assignmentrep
+{
+            $$ = Value::None;
+}
+
+assignmentrep:
+%empty
+{
+            $$ = Value::None;
+}
+| assignmentrep ',' assignment
+{
+            $$ = Value::None;
+}
+
+statementlist:
+blockrep 
+{
+            $$ = Value::None;
+}
+
+blockrep:
+%empty 
+{
+            $$ = Value::None;
+}
+| blockrep block
+{
+            $$ = Value::None;
+}
+
+block:
+'{' statementlist '}'
+{
+            $$ = Value::None;
+}
+| statement
+{
+            $$ = Value::None;
+}
+
+statement:
+ifstatement
+{
+            $$ = Value::None;
+}
+| forstatement
+{
+            $$ = Value::None;
+}
+| whilestatement
+{
+            $$ = Value::None;
+}
+| returnstatement ';'
+{
+            $$ = Value::None;
+}
+| dowhilestatement ';'
+{
+            $$ = Value::None;
+}
+| printf ';'
+{
+            $$ = Value::None;
+}
+| declassignment ';'
+{
+            $$ = Value::None;
+}
+| statassignment ';'
+{
+            $$ = Value::None;
+}
+| functioncall ';'
+{
+            $$ = Value::None;
+}
+
+statblock:
+'{' statementlist '}'
+{
+            $$ = Value::None;
+}
+| statement
+{
+            $$ = Value::None;
+}
+
+ifstatement:
+KW_IF '(' assignment ')' statblock LOWER_THAN_ELSE
+{
+            $$ = Value::None;
+}
+| KW_IF '(' assignment ')' statblock KW_ELSE statblock
+{
+            $$ = Value::None;
+}
+
+
+
+forstatement:
+KW_FOR '(' statassignment ';' expr ';' statassignment ')' statblock
+{
+            $$ = Value::None;
+}
+| KW_FOR '(' declassignment ';' expr ';' statassignment ')' statblock
+{
+            $$ = Value::None;
+}
+
+dowhilestatement:
+KW_DO statblock KW_WHILE '(' assignment ')'
+{
+            $$ = Value::None;
+}
+
+whilestatement:
+KW_WHILE '(' assignment ')' statblock
+{
+            $$ = Value::None;
+}
+
+returnstatement:
+KW_RETURN assignmentop
+{
+            $$ = Value::None;
+}
+
+assignmentop:
+%empty
+{
+            $$ = Value::None;
+}
+| assignment
+{
+            $$ = Value::None;
+}
+
+printf:
+KW_PRINTF '(' assignment ')'
+{
+            $$ = Value::None;
+}
+| KW_PRINTF '(' CONST_STRING ')'
+{
+            $$ = Value::None;
+}
+
+declassignment:
+type id assignmentassignop
+{
+            $$ = Value::None;
+}
+
+assignmentassignop:
+%empty
+{
+            $$ = Value::None;
+}
+| '=' assignment
+{
+            $$ = Value::None;
+}
+
+type:
+KW_BOOLEAN
+{
+            $$ = Value::None;
+}
+| KW_FLOAT
+{
+            $$ = Value::None;
+}
+| KW_INT
+{
+            $$ = Value::None;
+}
+| KW_VOID
+{
+            $$ = Value::None;
+}
+
+statassignment:
+id '=' assignment
+{
+            $$ = Value::None;
+}
+
+assignment:
+id '=' assignment
+{
+            $$ = Value::None;
+}
+| expr
+{
+            $$ = Value::None;
+}
+
+expr:
+simpexpr comparison
+{
+            $$ = Value::None;
+}
+
+comparison:
+%empty
+{
+            $$ = Value::None;
+}
+| EQ simpexpr
+{
+            $$ = Value::None;
+}
+| NEQ simpexpr
+{
+            $$ = Value::None;
+}
+| LEQ simpexpr
+{
+            $$ = Value::None;
+}
+| GEQ simpexpr
+{
+            $$ = Value::None;
+}
+| LSS simpexpr
+{
+            $$ = Value::None;
+}
+| GRT simpexpr
+{
+            $$ = Value::None;
+}
+
+simpexpr:
+'-' term addsubtractor
+{
+            $$ = Value::None;
+}
+| term addsubtractor
+{
+            $$ = Value::None;
+}
+
+addsubtractor:
+%empty
+{
+            $$ = Value::None;
+}
+| addsubtractor '+' term
+{
+            $$ = Value::None;
+}
+| addsubtractor '-' term
+{
+            $$ = Value::None;
+}
+| addsubtractor OR term
+{
+            $$ = Value::None;
+}
+
+term:
+factor factorrep
+{
+            $$ = Value::None;
+}
+
+factorrep:
+%empty
+{
+            $$ = Value::None;
+}
+| factorrep '*' factor
+{
+            $$ = Value::None;
+}
+| factorrep '/' factor
+{
+            $$ = Value::None;
+}
+| factorrep AND factor
+{
+            $$ = Value::None;
+}
+
+factor:
+CONST_INT
+{
+            $$ = Value::None;
+}
+| CONST_FLOAT
+{
+            $$ = Value::None;
+}
+| CONST_BOOLEAN
+{
+            $$ = Value::None;
+}
+| functioncall
+{
+            $$ = Value::None;
+}
+| id
+{
+            $$ = Value::None;
+}
+| '(' assignment ')'
+{
+            $$ = Value::None;
+}
+
+id:
+ID
+{
+            $$ = Value::None;
+}
 
 %%
 
@@ -79,7 +446,7 @@ impl Parser {
         Self {
             yy_error_verbose: true,
             yynerrs: 0,
-            debug: false,
+            debug: true,
             yyerrstatus_: 0,
             yylexer: lexer,
             errors: Vec::new(),
