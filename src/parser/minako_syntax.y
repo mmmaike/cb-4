@@ -56,9 +56,7 @@
 
 %%
 
-program:
-programbody
-{
+program: programbody {
             $$ = Value::None;
 }
 
@@ -159,10 +157,6 @@ ifstatement
 {
             $$ = Value::None;
 }
-| elsestatement
-{
-            $$ = Value::None;
-}
 | forstatement
 {
             $$ = Value::None;
@@ -202,15 +196,16 @@ statblock:
             $$ = Value::None;
 }
 | statement
+{
+            $$ = Value::None;
+}
 
 ifstatement:
 KW_IF '(' assignment ')' statblock LOWER_THAN_ELSE
 {
             $$ = Value::None;
 }
-
-elsestatement:
-KW_ELSE statblock
+| KW_IF '(' assignment ')' statblock KW_ELSE statblock
 {
             $$ = Value::None;
 }
@@ -251,6 +246,9 @@ assignmentop:
             $$ = Value::None;
 }
 | assignment
+{
+            $$ = Value::None;
+}
 
 printf:
 KW_PRINTF '(' assignment ')'
@@ -432,15 +430,6 @@ ID
             $$ = Value::None;
 }
 
-
-
-
-
-
-
-
-
-
 %%
 
 impl Parser {
@@ -457,7 +446,7 @@ impl Parser {
         Self {
             yy_error_verbose: true,
             yynerrs: 0,
-            debug: false,
+            debug: true,
             yyerrstatus_: 0,
             yylexer: lexer,
             errors: Vec::new(),
